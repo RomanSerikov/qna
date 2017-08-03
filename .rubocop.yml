@@ -7,9 +7,9 @@ AllCops:
   Exclude:
     - 'config/**/*'
     - 'vendor/**/*'
-    - 'spec/**/*'
     - 'db/*.rb'
     - 'bin/**/*'
+    - 'spec/spec_helper.rb'
     - Gemfile
     - Rakefile
   

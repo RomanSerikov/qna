@@ -27,3 +27,6 @@ Style/Documentation:
 
 Style/StringLiterals:
   Enabled: false
+
+Layout/TrailingWhitespace:
+  Enabled: false

@@ -7,5 +7,6 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
-    = flash[:notice]
+    p = flash[:notice]
+    p = flash[:alert]
     = yield

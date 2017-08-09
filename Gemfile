@@ -18,11 +18,12 @@ gem 'slim-rails'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'capybara', '~> 2.13'
+  gem 'capybara'
   gem 'selenium-webdriver'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'rails-controller-testing'
+  gem 'launchy'
 end
 
 group :development do

@@ -1,1 +1,10 @@
+h1 Questions list
+
+- @questions.each do |question|
+  div
+    = question.title
+    = question.body
+
+br
+
 = link_to 'Ask question', new_question_path 

@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
 
     if @answer.save
-      redirect_to @question
+      redirect_to @question, notice: 'Your answer succefully created.'
     else
       render :new
     end

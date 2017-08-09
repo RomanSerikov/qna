@@ -1,3 +1,16 @@
 p = @question.title
 
 p = @question.body
+
+p
+  - @question.answers.each do |answer|
+    = answer.body
+
+= form_for [@question, @answer] do |form|
+
+  .field
+    = form.label :body, 'Answer'
+    = form.text_area :body
+
+  .actions
+    = form.submit 'Send answer'

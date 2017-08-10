@@ -8,6 +8,8 @@ p
 
 = form_for [@question, @answer] do |form|
 
+  = render 'common/errors', resource: @answer
+
   .field
     = form.label :body, 'Answer'
     = form.text_area :body

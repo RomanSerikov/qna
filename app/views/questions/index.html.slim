@@ -2,7 +2,7 @@ h1 Questions list
 
 - @questions.each do |question|
   div
-    = question.title
+    = link_to question.title, question
     = question.body
 
 br

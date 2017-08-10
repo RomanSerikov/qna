@@ -74,12 +74,14 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'DELETE #destroy' do
     sign_in_user
 
-    let(:question) { create(:question, user: user) }
+    let!(:question) { create(:question, user: @user) }
 
     context 'question owner' do
+      it 'deletes question'
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
       it 'redirects to index view' do
         delete :destroy, params: { id: question }
-        expect(response).to render_template :index
+        expect(response).to redirect_to questions_path
       end
     end
   end

@@ -70,4 +70,17 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    sign_in_user
+
+    let(:question) { create(:question, user: user) }
+
+    context 'question owner' do
+      it 'redirects to index view' do
+        delete :destroy, params: { id: question }
+        expect(response).to render_template :index
+      end
+    end
+  end
 end

@@ -10,7 +10,8 @@ p
     - @question.answers.each do |answer|
       - if answer.persisted?
         = answer.body
-        = link_to 'Delete my answer', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }
+        - if user_signed_in? && current_user.owner_of?(@question)
+          = link_to 'Delete my answer', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }
   - else
     div no answers yet.
 

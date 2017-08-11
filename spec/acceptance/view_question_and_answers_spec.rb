@@ -8,10 +8,9 @@ feature 'view question and answers', %q{
 
   given(:user)     { create(:user) }
   given(:question) { create(:question, user: user) }
+  given!(:answers) { create_list(:answer, 3, question: question, user: user) }
 
   scenario 'user view question and answers' do
-    create_list(:answer, 3, question: question, user: user)
-
     visit questions_path
     click_on 'MyQuestionTitle'
 

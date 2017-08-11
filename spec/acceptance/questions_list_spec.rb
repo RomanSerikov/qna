@@ -6,11 +6,10 @@ feature 'Display questions list', %q{
   I want to see questions list
 } do
 
-  given(:user) { create(:user) }
+  given(:user)       { create(:user) }
+  given!(:questions) { create_list(:question, 3, user: user) }
 
   scenario 'User sees questions list' do
-    create_list(:question, 3, user: user)
-    
     visit questions_path
 
     expect(page).to have_content('MyQuestionTitle', count: 3)

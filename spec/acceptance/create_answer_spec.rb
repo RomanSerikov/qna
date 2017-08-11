@@ -6,19 +6,13 @@ feature 'Create answer', %q{
   I want to be able to answer the question
 } do
 
+  given(:user)     { create(:user) }
+  given(:question) { create(:question, user: user) }
+
   scenario 'Authenticated user creates answer with valid parameters' do
-    User.create!(email: 'user@test.com', password: '12345678')
+    sign_in(user)
 
-    visit new_user_session_path
-    fill_in 'Email', with: 'user@test.com'
-    fill_in 'Password', with: '12345678'
-    click_on 'Log in'
-
-    visit questions_path
-    click_on 'Ask question'
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'test test test'
-    click_on 'Create'
+    visit question_path(question)
 
     fill_in 'Answer', with: 'Answer on test question'
     click_on 'Send answer'
@@ -28,18 +22,9 @@ feature 'Create answer', %q{
   end
 
   scenario 'Authenticated user tries to create answer with invalid parameters' do
-    User.create!(email: 'user@test.com', password: '12345678')
+    sign_in(user)
 
-    visit new_user_session_path
-    fill_in 'Email', with: 'user@test.com'
-    fill_in 'Password', with: '12345678'
-    click_on 'Log in'
-
-    visit questions_path
-    click_on 'Ask question'
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'test test test'
-    click_on 'Create'
+    visit question_path(question)
 
     fill_in 'Answer', with: nil
     click_on 'Send answer'

@@ -6,15 +6,14 @@ feature 'User sign out', %q{
   I want to be able to sign out
 } do
 
+  given(:user) { create(:user) }
+
   scenario 'User try to sign out' do
-    User.create!(email: 'userout@test.com', password: '12345678')
+    sign_in(user)
 
-    visit new_user_session_path
-    fill_in 'Email', with: 'userout@test.com'
-    fill_in 'Password', with: '12345678'
-    click_on 'Log in'
-
+    visit root_path
     click_on 'Log out'
+
     expect(page).to have_content 'Signed out successfully.'
     expect(current_path).to eq root_path
   end

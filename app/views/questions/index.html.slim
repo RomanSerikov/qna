@@ -1,9 +1,6 @@
 h1 Questions list
 
-- @questions.each do |question|
-  div
-    = link_to question.title, question
-    = question.body
+= render @questions
 
 br
 

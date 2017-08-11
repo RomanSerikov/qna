@@ -13,6 +13,5 @@ feature 'Display questions list', %q{
     visit questions_path
 
     expect(page).to have_content('MyQuestionTitle', count: 3)
-    expect(page).to have_content('MyQuestionText', count: 3)
   end
 end

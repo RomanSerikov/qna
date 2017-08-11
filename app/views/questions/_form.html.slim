@@ -1,0 +1,14 @@
+= form_for question do |form|
+  
+  = render 'common/errors', resource: question
+
+  .field
+    = form.label :title
+    = form.text_field :title
+
+  .field
+    = form.label :body
+    = form.text_area :body
+
+  .actions
+    = form.submit 'Create'

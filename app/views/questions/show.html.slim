@@ -15,13 +15,4 @@ p
   - else
     div no answers yet.
 
-= form_for [@question, @answer] do |form|
-
-  = render 'common/errors', resource: @answer
-
-  .field
-    = form.label :body, 'Answer'
-    = form.text_area :body
-
-  .actions
-    = form.submit 'Send answer'
+= render 'answers/form', question: @question, answer: @answer

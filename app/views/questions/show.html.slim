@@ -5,8 +5,13 @@ p = @question.body
 p = link_to 'Delete my question', @question, method: :delete, data: { confirm: 'Are you sure?' }
 
 p
-  - @question.answers.each do |answer|
-    = answer.body
+  - if @question.answers.any?
+    - @question.answers.each do |answer|
+      - if answer.persisted?
+        = answer.body
+        = link_to 'Delete my answer', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }
+  - else
+    div no answers yet.
 
 = form_for [@question, @answer] do |form|
 

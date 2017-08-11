@@ -17,6 +17,18 @@ class AnswersController < ApplicationController
     end
   end
 
+  def destroy
+    @answer = Answer.find(params[:id])
+
+    if current_user.owner_of?(@answer)
+      @answer.destroy
+      redirect_to @question, notice: 'Your answer succefully deleted.'
+    else
+      flash.now[:notice] = 'You are not the answer author.'
+      render 'questions/show'
+    end
+  end
+
   private
 
   def set_question

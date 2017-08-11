@@ -92,7 +92,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'question non-owner' do
       it 'tries to delete question' do
-        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+        expect { delete :destroy, params: { id: question } }.not_to change(Question, :count)
       end
 
       it 'redirects to index view' do

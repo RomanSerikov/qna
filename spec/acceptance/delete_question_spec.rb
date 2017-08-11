@@ -22,7 +22,7 @@ feature '', %q{
 
     click_on 'Delete my question'
     expect(current_path).to eq questions_path
-    expect(page).to have_content 'Your question succefully removed.'
+    expect(page).to have_content 'Your question succefully deleted.'
     expect(page).to_not have_content 'Test question'
   end
 end

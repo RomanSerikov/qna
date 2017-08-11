@@ -2,6 +2,8 @@ p = @question.title
 
 p = @question.body
 
+p = link_to 'Delete my question', @question, method: :delete, data: { confirm: 'Are you sure?' }
+
 p
   - @question.answers.each do |answer|
     = answer.body

@@ -6,9 +6,11 @@ feature 'view question and answers', %q{
   I want to be able to view question and answers on it
 } do
 
+  given(:user)     { create(:user) }
+  given(:question) { create(:question, user: user) }
+
   scenario 'user view question and answers' do
-    question = create(:question)
-    create_list(:answer, 3, question: question)
+    create_list(:answer, 3, question: question, user: user)
 
     visit questions_path
     click_on 'MyQuestionTitle'

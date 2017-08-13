@@ -16,6 +16,8 @@ feature 'view question and answers', %q{
 
     expect(page).to have_content 'MyQuestionTitle'
     expect(page).to have_content 'MyQuestionText'
-    expect(page).to have_content('MyAnswerText', count: 3)
+    expect(page).to have_content 'MyAnswerText', count: 3
+    expect(page).to have_field   'Answer', type: 'textarea'
+    expect(page).to have_button  'Send answer'
   end
 end

@@ -1,6 +1,7 @@
-= form_for [question, answer] do |form|
-
-  = render 'common/errors', resource: answer
+= form_for [question, answer], remote: true do |form|
+  
+  .answer-errors
+    = render 'common/errors', resource: answer
 
   .field
     = form.label :body, 'Answer'

@@ -5,14 +5,8 @@ p = @question.body
 - if user_signed_in? && current_user.owner_of?(@question)
   p = link_to 'Delete my question', @question, method: :delete, data: { confirm: 'Are you sure?' }
 
-p
-  - if @question.answers.any?
-    - @question.answers.each do |answer|
-      - if answer.persisted?
-        = answer.body
-        - if user_signed_in? && current_user.owner_of?(@question)
-          = link_to 'Delete my answer', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }
-  - else
-    div no answers yet.
+.answers
+  = render @question.answers
 
-= render 'answers/form', question: @question, answer: @answer
+- if user_signed_in? 
+  = render 'answers/form', question: @question, answer: @answer

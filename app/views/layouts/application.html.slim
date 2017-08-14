@@ -7,8 +7,9 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
-    p = flash[:notice]
-    p = flash[:alert]
+    .flash 
+      = flash[:notice]
+      = flash[:alert]
 
     header
       - if user_signed_in?

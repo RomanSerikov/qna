@@ -9,7 +9,7 @@ feature 'Create answer', %q{
   given(:user)     { create(:user) }
   given(:question) { create(:question, user: user) }
 
-  scenario 'Authenticated user creates answer with valid parameters' do
+  scenario 'Authenticated user creates answer with valid parameters', js: true do
     sign_in(user)
 
     visit question_path(question)
@@ -17,11 +17,14 @@ feature 'Create answer', %q{
     fill_in 'Answer', with: 'Answer on test question'
     click_on 'Send answer'
 
+    expect(current_path).to eq question_path(question)
     expect(page).to have_content 'Your answer succefully created.'
-    expect(page).to have_content 'Answer on test question'
+    within '.answers' do
+      expect(page).to have_content 'Answer on test question'
+    end
   end
 
-  scenario 'Authenticated user tries to create answer with invalid parameters' do
+  scenario 'Authenticated user tries to create answer with invalid parameters', js: true do
     sign_in(user)
 
     visit question_path(question)
@@ -32,7 +35,7 @@ feature 'Create answer', %q{
     expect(page).to have_content 'Body can\'t be blank'
   end
 
-  scenario 'Non-authenticated user tries to create answer' do
+  scenario 'Non-authenticated user tries to create answer', js: true do
     visit questions_path
     click_on 'Ask question'
 

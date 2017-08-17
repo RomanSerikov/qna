@@ -11,9 +11,9 @@ class AnswersController < ApplicationController
     @answer.user = current_user
 
     if @answer.save
-      redirect_to @question, notice: 'Your answer succefully created.'
+      flash.now[:notice] = 'Your answer succefully created.'
     else
-      render 'questions/show'
+      flash.now[:notice] = 'Your answer was not created.'
     end
   end
 

@@ -28,5 +28,14 @@ Style/Documentation:
 Style/StringLiterals:
   Enabled: false
 
+Style/SymbolArray:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
+Style/UnneededPercentQ:
+  Enabled: false
+
 Layout/TrailingWhitespace:
   Enabled: false

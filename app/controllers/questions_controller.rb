@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :destroy]
-  before_action :set_question, only: [:show, :destroy]
+  before_action :set_question, only: [:show, :update, :destroy]
 
   def index
     @questions = Question.all
@@ -21,6 +21,15 @@ class QuestionsController < ApplicationController
       redirect_to @question, notice: 'Your question succefully created.'
     else
       render :new
+    end
+  end
+
+  def update
+    if current_user.owner_of?(@question)
+      @question.update(question_params)
+      flash.now[:notice] = 'Your question succefully updated.'
+    else
+      flash.now[:notice] = 'Your question was not updated.'
     end
   end
 

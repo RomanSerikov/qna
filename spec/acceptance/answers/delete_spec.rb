@@ -11,7 +11,7 @@ feature 'Delete answer', %q{
   given!(:answer)      { create(:answer, question: question, user: user) }
   given(:another_user) { create(:user) }
 
-  scenario 'Authenticated user deletes own answer' do
+  scenario 'Authenticated user deletes own answer', js: true do
     sign_in(user)
 
     visit question_path(question)
@@ -22,7 +22,7 @@ feature 'Delete answer', %q{
     expect(page).to_not have_content 'Answer on test question'
   end
 
-  scenario 'Authenticated user tries to delete another user answer' do
+  scenario 'Authenticated user tries to delete another user answer', js: true do
     sign_in(another_user)
 
     visit question_path(question)
@@ -30,7 +30,7 @@ feature 'Delete answer', %q{
     expect(page).to_not have_content 'Delete my answer'
   end
 
-  scenario 'Non-authenticated user tries to delete answer' do
+  scenario 'Non-authenticated user tries to delete answer', js: true do
     visit question_path(question)
 
     expect(page).to_not have_content 'Delete my answer'

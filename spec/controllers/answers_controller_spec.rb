@@ -92,23 +92,25 @@ RSpec.describe AnswersController, type: :controller do
       before { allow(controller).to receive(:current_user).and_return(user) }
 
       it 'deletes answer' do
-        expect { delete :destroy, params: { question_id: question, id: answer } }.to change(Answer, :count).by(-1)
+        expect { delete :destroy, params: { question_id: question, id: answer }, format: :js }
+          .to change(Answer, :count).by(-1)
       end
 
-      it 'redirects to question show view' do
-        delete :destroy, params: { question_id: question, id: answer }
-        expect(response).to redirect_to question
+      it 'renders destroy template' do
+        delete :destroy, params: { question_id: question, id: answer }, format: :js
+        expect(response).to render_template :destroy
       end
     end
 
     context 'answer non-owner' do
       it 'tries to delete answer' do
-        expect { delete :destroy, params: { question_id: question, id: answer } }.not_to change(Answer, :count)
+        expect { delete :destroy, params: { question_id: question, id: answer }, format: :js }
+          .not_to change(Answer, :count)
       end
 
-      it 're-renders question show view' do
-        delete :destroy, params: { question_id: question, id: answer }
-        expect(response).to render_template 'questions/show'
+      it 'renders destroy template' do
+        delete :destroy, params: { question_id: question, id: answer }, format: :js
+        expect(response).to render_template :destroy
       end
     end
   end

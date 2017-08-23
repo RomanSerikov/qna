@@ -4,7 +4,7 @@
   - if user_signed_in? && current_user.owner_of?(answer)
     = link_to 'Edit', '', class: 'edit_answer_link', data: { answer_id: answer.id }
     |  |  
-    = link_to 'Delete my answer', question_answer_path(answer.question, answer), method: :delete, data: { confirm: 'Are you sure?' }
+    = link_to 'Delete my answer', question_answer_path(answer.question, answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
     p
       = form_for [@question, answer], remote: true, html: { style: "display: none", id: "edit-answer-#{answer.id}" } do |f|
         = f.label :body, 'Answer'

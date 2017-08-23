@@ -27,7 +27,7 @@ feature 'Edit question', %q{
       expect(page).to have_link "Edit my question"
     end
 
-    scenario 'try to edit his answer', js: true do
+    scenario 'try to edit his question', js: true do
       click_on 'Edit my question'
 
       within '.question' do

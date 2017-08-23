@@ -47,6 +47,42 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    sign_in_user
+
+    context 'answer owner' do
+      before { allow(controller).to receive(:current_user).and_return(user) }
+
+      it 'changes answer attributes' do
+        patch :update, params: { question_id: question, id: answer, answer: { body: 'NewBody' } }, 
+              format: :js
+        answer.reload  
+        expect(answer.body).to eq 'NewBody'
+      end
+
+      it 'renders update template' do
+        patch :update, 
+              params: { question_id: question, id: answer, answer: attributes_for(:answer) }, 
+              format: :js
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'answer non-owner' do
+      let(:another_user)   { create(:user) }
+      let(:another_answer) { create(:answer, question: question, user: another_user) }
+
+      it 'tries to change answer attributes' do
+        patch :update, 
+              params: { question_id: question, id: another_answer, answer: { body: 'NewBody' } }, 
+              format: :js
+        answer.reload
+
+        expect(another_answer.body).to_not eq 'NewBody'
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     sign_in_user
 

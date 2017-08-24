@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_question
-  before_action :set_answer, only: [:update, :destroy]
+  before_action :set_question, only: [:create, :update]
+  before_action :set_answer, only: [:update, :destroy, :best]
 
   def new
     @answer = Answer.new
@@ -24,6 +24,17 @@ class AnswersController < ApplicationController
       flash.now[:notice] = 'Your answer succefully updated'
     else
       flash.now[:notice] = 'Your answer was not updated'
+    end
+  end
+
+  def best
+    @question = @answer.question
+
+    if current_user.owner_of?(@question)
+      @answer.mark_best
+      flash.now[:notice] = 'Your answer succefully marked as best.'
+    else
+      flash.now[:notice] = 'You are not the question author.'
     end
   end
 

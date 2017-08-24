@@ -83,6 +83,25 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'PATCH #best' do
+    sign_in_user
+
+    context 'question owner' do
+      before { allow(controller).to receive(:current_user).and_return(user) }
+
+      it 'changes answer best attribute' do
+        patch :best, params: { question_id: question, id: answer, user: user }, format: :js
+        answer.reload
+        expect(answer.best).to be true
+      end
+
+      it 'renders best template' do
+        patch :best, params: { question_id: question, id: answer, user: user }, format: :js
+        expect(response).to render_template :best
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     sign_in_user
 

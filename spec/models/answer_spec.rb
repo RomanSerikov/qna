@@ -7,4 +7,16 @@ RSpec.describe Answer, type: :model do
   it { should have_db_column(:user_id) }
 
   it { should validate_presence_of :body }
+  it { should validate_uniqueness_of(:best).scoped_to(:question_id) }
+
+  describe '#mark_best' do
+    let(:user)     { create(:user) }
+    let(:question) { create(:question, user: user) }
+    let(:answer)   { create(:answer, question: question, user: user) }
+
+    it 'change boolean attribute best to true' do
+      answer.mark_best
+      expect(answer.best).to be true
+    end
+  end
 end

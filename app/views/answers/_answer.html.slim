@@ -2,8 +2,8 @@
   .answer id="answer-#{answer.id}" class=('best-answer' if answer.best)
     = answer.body
     br
-    - if user_signed_in? && current_user.owner_of?(@question) && !answer.best
-      = link_to 'Mark as best', best_question_answer_path(@question, answer), method: :patch, remote: true
+    - if can_mark_best?(@question, answer)
+      = link_to 'Mark as best', best_question_answer_path(@question, answer), class: 'mark-best', method: :patch, remote: true
       |  |  
 
     - if user_signed_in? && current_user.owner_of?(answer)

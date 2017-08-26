@@ -1,7 +1,5 @@
 require 'acceptance_helper'
 
-# Автор вопроса может выбрать лучший ответ для своего вопроса (лучший ответ может быть только 1)
-
 feature 'Choose best answer', %q{
   In order to mark the answer, that solved my problem
   As an author of question
@@ -45,6 +43,21 @@ feature 'Choose best answer', %q{
       within '.best-answer' do
         expect(page).to have_content answer_2.body
         expect(page).to_not have_content answer_1.body
+      end
+    end
+
+    scenario 'try to choose another best answer, when one already chosen', js: true do
+      within "#answer-2" do
+        click_on 'Mark as best'
+      end
+
+      within "#answer-1" do
+        click_on 'Mark as best'
+      end
+
+      within '.best-answer' do
+        expect(page).to have_content answer_1.body
+        expect(page).to_not have_content answer_2.body
       end
     end
   end

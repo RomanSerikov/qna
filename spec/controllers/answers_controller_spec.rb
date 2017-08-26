@@ -85,6 +85,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #best' do
     sign_in_user
+    let(:another_answer) { create(:answer, question: question, user: user) }
 
     context 'question owner' do
       before { allow(controller).to receive(:current_user).and_return(user) }
@@ -93,6 +94,13 @@ RSpec.describe AnswersController, type: :controller do
         patch :best, params: { question_id: question, id: answer, user: user }, format: :js
         answer.reload
         expect(answer.best).to be true
+      end
+
+      it 'changes answer best attribute when one already chosen as best' do
+        patch :best, params: { question_id: question, id: answer, user: user }, format: :js
+        patch :best, params: { question_id: question, id: another_answer, user: user }, format: :js
+        another_answer.reload
+        expect(another_answer.best).to be true
       end
 
       it 'renders best template' do

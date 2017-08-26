@@ -79,7 +79,8 @@ RSpec.describe QuestionsController, type: :controller do
       before { allow(controller).to receive(:current_user).and_return(user) }
       
       it 'changes question attributes' do
-        patch :update, params: { id: question, question: { title: 'NewTitle', body: 'NewBody' } }, format: :js
+        patch :update, params: { id: question, question: { title: 'NewTitle', body: 'NewBody' } }, 
+              format: :js
         question.reload
         
         expect(question.title).to eq 'NewTitle'
@@ -102,6 +103,12 @@ RSpec.describe QuestionsController, type: :controller do
 
         expect(another_question.title).to_not eq 'NewTitle'
         expect(another_question.body).to_not eq 'NewBody'
+      end
+
+      it 'renders update template' do
+        patch :update, params: { id: another_question, question: attributes_for(:question) }, 
+              format: :js
+        expect(response).to render_template :update
       end
     end
   end

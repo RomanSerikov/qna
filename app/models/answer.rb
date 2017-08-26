@@ -8,7 +8,9 @@ class Answer < ApplicationRecord
   default_scope { order(best: :desc) }
 
   def mark_best
-    question.answers.where(best: true).update_all(best: false)
-    self.update(best: true)
+    transaction do
+      question.answers.update_all(best: false)
+      self.update(best: true)
+    end
   end
 end

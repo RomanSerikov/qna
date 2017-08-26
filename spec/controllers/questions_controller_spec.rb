@@ -72,6 +72,47 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    sign_in_user
+
+    context 'question owner' do
+      before { allow(controller).to receive(:current_user).and_return(user) }
+      
+      it 'changes question attributes' do
+        patch :update, params: { id: question, question: { title: 'NewTitle', body: 'NewBody' } }, 
+              format: :js
+        question.reload
+        
+        expect(question.title).to eq 'NewTitle'
+        expect(question.body).to eq 'NewBody'
+      end
+
+      it 'renders update template' do
+        patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'question non-owner' do
+      let(:another_user)     { create(:user) }
+      let(:another_question) { create(:question, user: another_user) }
+
+      it 'tries to change question attributes' do
+        patch :update, params: { id: another_question, question: { title: 'NewTitle', body: 'NewBody' } }, format: :js
+        question.reload
+
+        expect(another_question.title).to_not eq 'NewTitle'
+        expect(another_question.body).to_not eq 'NewBody'
+      end
+
+      it 'renders update template' do
+        patch :update, params: { id: another_question, question: attributes_for(:question) }, 
+              format: :js
+        expect(response).to render_template :update
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     sign_in_user
 

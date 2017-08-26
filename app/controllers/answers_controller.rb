@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_question
+  before_action :set_question, only: [:create, :update]
+  before_action :set_answer, only: [:update, :destroy, :best]
 
   def new
     @answer = Answer.new
@@ -17,19 +18,40 @@ class AnswersController < ApplicationController
     end
   end
 
-  def destroy
-    @answer = Answer.find(params[:id])
+  def update
+    if current_user.owner_of?(@answer)
+      @answer.update(answer_params)
+      flash.now[:notice] = 'Your answer succefully updated'
+    else
+      flash.now[:notice] = 'Your answer was not updated'
+    end
+  end
 
+  def best
+    @question = @answer.question
+
+    if current_user.owner_of?(@question)
+      @answer.mark_best
+      flash.now[:notice] = 'Your answer succefully marked as best.'
+    else
+      flash.now[:notice] = 'You are not the question author.'
+    end
+  end
+
+  def destroy
     if current_user.owner_of?(@answer)
       @answer.destroy
-      redirect_to @question, notice: 'Your answer succefully deleted.'
+      flash.now[:notice] = 'Your answer succefully deleted.'
     else
       flash.now[:notice] = 'You are not the answer author.'
-      render 'questions/show'
     end
   end
 
   private
+
+  def set_answer
+    @answer = Answer.find(params[:id])
+  end
 
   def set_question
     @question = Question.find(params[:question_id])

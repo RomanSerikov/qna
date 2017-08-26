@@ -1,0 +1,7 @@
+<% if @answer.errors.any? %>
+  $('.answer-errors').html('<%= j render 'common/errors', resource: @answer %>');
+<% else %>
+  $(".flash").html("<%= flash[:notice] %>");
+  $('.answer-errors').html('');
+  $('#answer-' + '<%= @answer.id %>').html('<%= j render @answer %>');
+<% end %>

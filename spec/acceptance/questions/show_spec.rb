@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'view question and answers', %q{
   In order to solve my problem

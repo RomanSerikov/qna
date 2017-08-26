@@ -1,5 +1,18 @@
-= answer.body
-br
-- if user_signed_in? && current_user.owner_of?(answer)
-  = link_to 'Delete my answer', question_answer_path(answer.question, answer), method: :delete, data: { confirm: 'Are you sure?' }
+- if answer.persisted?
+  .answer id="answer-#{answer.id}" class=('best-answer' if answer.best)
+    = answer.body
+    br
+    - if can_mark_best?(@question, answer)
+      = link_to 'Mark as best', best_question_answer_path(@question, answer), class: 'mark-best', method: :patch, remote: true
+      |  |  
 
+    - if user_signed_in? && current_user.owner_of?(answer)
+      = link_to 'Edit', '', class: 'edit_answer_link', data: { answer_id: answer.id }
+      |  |  
+      = link_to 'Delete my answer', question_answer_path(answer.question, answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+      p
+        = form_for [@question, answer], remote: true, html: { style: "display: none", id: "edit-answer-#{answer.id}" } do |f|
+          = f.label :body, 'Answer'
+          br
+          = f.text_area :body
+          = f.submit 'Save', class: 'edit_answer_button'

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'Delete question', %q{
   In order to fix my mistake

@@ -9,7 +9,7 @@ feature 'Add files to question', %q{
   given(:user) { create(:user) }
 
   background do
-    sing_in(user)
+    sign_in(user)
     visit new_question_path
   end
 
@@ -19,6 +19,6 @@ feature 'Add files to question', %q{
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Create'
 
-    expect(page).to have_content 'spec_helper.rb'
+    expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
   end
 end

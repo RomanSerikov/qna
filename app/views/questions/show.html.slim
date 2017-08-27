@@ -3,6 +3,12 @@
     h2 = @question.title
     p = @question.body
 
+  - if @question.attachments.present?
+    p Attachments:
+    ul
+      - @question.attachments.each do |a|
+        li = link_to a.file.identifier, a.file.url
+
   - if user_signed_in? && current_user.owner_of?(@question)
     .question-errors
     

@@ -3,9 +3,7 @@
     = answer.body
     - if answer.attachments.any?
       p Attachments:
-      ul
-        - answer.attachments.each do |a|
-          li = link_to a.file.identifier, a.file.url
+      ul = render partial: 'common/attachment', collection: answer.attachments
     br
     - if can_mark_best?(@question, answer)
       = link_to 'Mark as best', best_question_answer_path(@question, answer), class: 'mark-best', method: :patch, remote: true
@@ -20,4 +18,14 @@
           = f.label :body, 'Answer'
           br
           = f.text_area :body
+
+          .field
+            p Attachments:
+            p
+              = f.fields_for :attachments do |a|
+                = render 'common/attachment_fields', f: a
+              .links
+                = link_to_add_association 'add file', f, :attachments,
+                  partial: 'common/attachment_fields'
+                  
           = f.submit 'Save', class: 'edit_answer_button'

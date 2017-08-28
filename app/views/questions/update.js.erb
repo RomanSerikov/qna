@@ -4,4 +4,5 @@
   $('.flash').html('<%= flash[:notice] %>');
   $('.question-errors').html('');
   $('.question-data').html('<h2><%= j @question.title %></h2><p><%= j @question.body %></p>');
+  $('.question-files').html("<%= j render partial: 'common/attachment', collection: @question.attachments %>");
 <% end %>

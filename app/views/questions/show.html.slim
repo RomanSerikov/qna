@@ -5,9 +5,7 @@
 
   - if @question.attachments.present?
     p Attachments:
-    ul
-      - @question.attachments.each do |a|
-        li = link_to a.file.identifier, a.file.url
+    ul.question-files = render partial: 'common/attachment', collection: @question.attachments
 
   - if user_signed_in? && current_user.owner_of?(@question)
     .question-errors
@@ -26,6 +24,15 @@
           = f.label :body, 'Question body'
           br
           = f.text_area :body
+
+        .field
+          p Attachments:
+          p
+            = f.fields_for :attachments do |a|
+              = render 'common/attachment_fields', f: a
+            .links
+              = link_to_add_association 'add file', f, :attachments,
+                partial: 'common/attachment_fields'
 
         .actions
           = f.submit 'Save question', class: 'edit_question_button'

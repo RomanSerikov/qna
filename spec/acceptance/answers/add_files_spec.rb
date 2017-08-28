@@ -6,8 +6,8 @@ feature 'Add files to answer', %q{
   I want to be able to attach files
 } do
 
-  given(:user)     { create(:user) }
-  given(:question) { create(:question, user: user) }
+  given(:user)       { create(:user) }
+  given(:question)   { create(:question, user: user) }
 
   background do
     sign_in(user)
@@ -20,7 +20,25 @@ feature 'Add files to answer', %q{
     click_on 'Send answer'
 
     within '.answers' do
-      expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
+  end
+
+  scenario 'User adds two files to answer', js: true do
+    fill_in 'Answer', with: 'Answer on test question'
+    attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+
+    click_on 'add file'
+
+    within all('.nested-fields').last do
+      attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
+    end
+
+    click_on 'Send answer'
+
+    within '.answers' do
+      expect(page).to have_link 'spec_helper.rb'
+      expect(page).to have_link 'rails_helper.rb'
     end
   end
 end

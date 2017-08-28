@@ -8,5 +8,10 @@
     br
     = form.text_area :body
 
+  .field
+    = form.fields_for :attachments do |a|
+      = a.label :file
+      = a.file_field :file
+
   .actions
     = form.submit 'Send answer'

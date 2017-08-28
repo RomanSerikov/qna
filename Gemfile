@@ -17,6 +17,7 @@ gem 'slim-rails'
 gem 'devise'
 gem 'jquery-rails'
 gem 'carrierwave'
+gem 'remotipart'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

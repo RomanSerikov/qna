@@ -13,7 +13,7 @@
     p = link_to 'Edit my question', '', class: 'edit_question_link', remote: true
 
     p
-      = form_for @question, class: 'edit_question_form', html: { style: "display: none" }, remote: true do |f|
+      = form_for @question, class: 'edit_question_form', remote: true do |f|
 
         .field
           = f.label :title, 'Question title'

@@ -3,13 +3,17 @@
     h2 = @question.title
     p = @question.body
 
+  - if @question.attachments.present?
+    p Attachments:
+    ul.question-files = render partial: 'common/attachment', collection: @question.attachments
+
   - if user_signed_in? && current_user.owner_of?(@question)
     .question-errors
     
     p = link_to 'Edit my question', '', class: 'edit_question_link', remote: true
 
     p
-      = form_for @question, class: 'edit_question_form', html: { style: "display: none" }, remote: true do |f|
+      = form_for @question, class: 'edit_question_form', remote: true do |f|
 
         .field
           = f.label :title, 'Question title'
@@ -20,6 +24,15 @@
           = f.label :body, 'Question body'
           br
           = f.text_area :body
+
+        .field
+          p Attachments:
+          p
+            = f.fields_for :attachments do |a|
+              = render 'common/attachment_fields', f: a
+            .links
+              = link_to_add_association 'add file', f, :attachments,
+                partial: 'common/attachment_fields'
 
         .actions
           = f.submit 'Save question', class: 'edit_question_button'

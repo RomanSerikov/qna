@@ -10,5 +10,14 @@
     = form.label :body
     = form.text_area :body
 
+  .field
+    p Attachments:
+    p
+      = form.fields_for :attachments do |a|
+        = render 'common/attachment_fields', f: a
+      .links
+        = link_to_add_association 'add file', form, :attachments,
+          partial: 'common/attachment_fields'
+
   .actions
     = form.submit 'Create'

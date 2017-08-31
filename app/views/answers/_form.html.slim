@@ -1,4 +1,13 @@
-= form_for [question, answer], remote: true do |form|
+- if answer.new_record?
+  - btn_text = 'Send answer'
+  - edit = nil
+  - btn_class = nil
+- else
+  - btn_text = 'Save'
+  - edit = { id: "edit-answer-#{answer.id}" }
+  - btn_class = 'edit_answer_button'
+
+= form_for [question, answer], html: edit, remote: true do |form|
   
   .answer-errors
     = render 'common/errors', resource: answer
@@ -8,5 +17,14 @@
     br
     = form.text_area :body
 
+  .field
+    p Attachments:
+    p
+      = form.fields_for :attachments do |a|
+        = render 'common/attachment_fields', f: a
+      .links
+        = link_to_add_association 'add file', form, :attachments,
+          partial: 'common/attachment_fields'
+
   .actions
-    = form.submit 'Send answer'
+    = form.submit btn_text, class: btn_class

@@ -1,17 +1,44 @@
 - if answer.persisted?
   .answer id="answer-#{answer.id}" class=('best-answer' if answer.best)
     = answer.body
+    .a-votes
+      div[class = "answer-votes-#{answer.id}"]
+        p Answer rating: #{answer.votes.sum(:value)}
+
+      - if user_signed_in?
+        = link_to '+',
+                  voteup_question_answer_path(@question, answer),
+                  method: :post,
+                  remote: true,
+                  data: { answer_id: answer.id, type: :json },
+                  class: 'vote_answer'
+        |  |  
+        = link_to '-',
+                  votedown_question_answer_path(@question, answer),
+                  method: :post,
+                  remote: true,
+                  data: { answer_id: answer.id, type: :json },
+                  class: 'vote_answer'
+
     - if answer.attachments.any?
       p Attachments:
       ul = render partial: 'common/attachment', collection: answer.attachments
     br
     - if can_mark_best?(@question, answer)
-      = link_to 'Mark as best', best_question_answer_path(@question, answer), class: 'mark-best', method: :patch, remote: true
+      = link_to 'Mark as best',
+                best_question_answer_path(@question, answer),
+                method: :patch,
+                remote: true,
+                class: 'mark-best'
       |  |  
 
     - if user_signed_in? && current_user.owner_of?(answer)
       = link_to 'Edit', '', class: 'edit_answer_link', data: { answer_id: answer.id }
       |  |  
-      = link_to 'Delete my answer', question_answer_path(answer.question, answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+      = link_to 'Delete my answer',
+                question_answer_path(answer.question, answer),
+                method: :delete,
+                remote: true,
+                data: { confirm: 'Are you sure?' }
       
       p = render 'answers/form', question: @question, answer: answer

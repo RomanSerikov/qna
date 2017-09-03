@@ -2,8 +2,15 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "questions#index"
 
-  resources :questions do
-    resources :answers do
+  concern :votable do
+    member do
+      post :voteup
+      post :votedown
+    end
+  end
+
+  resources :questions, concerns: [:votable] do
+    resources :answers, concerns: [:votable] do
       patch :best, on: :member
     end
   end

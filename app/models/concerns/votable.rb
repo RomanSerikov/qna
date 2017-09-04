@@ -12,6 +12,10 @@ module Votable
       vote(-1, user)
     end
 
+    def rating
+      votes.sum(:value)
+    end
+
     private
 
     def vote(value, user)

@@ -3,7 +3,7 @@
     = answer.body
     .a-votes
       div[class = "answer-votes-#{answer.id}"]
-        p Answer rating: #{answer.votes.sum(:value)}
+        p Answer rating: #{answer.rating}
 
       - if user_signed_in?
         = link_to '+',

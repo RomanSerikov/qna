@@ -18,7 +18,7 @@ module Voted
   private
 
   def render_votable
-    render json: @votable.votes.sum(:value)
+    render json: @votable.rating
   end
 
   def model_klass

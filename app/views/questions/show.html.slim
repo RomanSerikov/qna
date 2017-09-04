@@ -5,7 +5,7 @@
 
   .q-votes
     .question-votes 
-      p Question rating: #{@question.votes.sum(:value)}
+      p Question rating: #{@question.rating}
 
     - if user_signed_in?
       = link_to '+',

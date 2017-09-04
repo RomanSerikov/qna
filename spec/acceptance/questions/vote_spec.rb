@@ -37,5 +37,16 @@ feature 'Vote for question', %q{
         expect(page).to have_content 'Question rating: 1'
       end
     end
+
+    scenario 'try to vote for another user question twice', js: true do
+      sign_in(user)
+      visit question_path(question)
+
+      within '.question' do
+        click_on '+'
+        click_on '+'
+        expect(page).to have_content 'Question rating: 1'
+      end
+    end
   end
 end

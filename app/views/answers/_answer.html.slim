@@ -5,7 +5,7 @@
       div[class = "answer-votes-#{answer.id}"]
         p Answer rating: #{answer.rating}
 
-      - if user_signed_in?
+      - if user_signed_in? && !current_user.owner_of?(answer)
         = link_to '+',
                   voteup_question_answer_path(@question, answer),
                   method: :post,

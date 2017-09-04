@@ -7,8 +7,9 @@ feature 'Vote for answer', %q{
 } do
 
   given(:user)     { create(:user) }
-  given(:question) { create(:question, user: user) }
-  given!(:answer)  { create(:answer, question: question, user: user) }
+  given(:author)   { create(:user) }
+  given(:question) { create(:question) }
+  given!(:answer)  { create(:answer, question: question, user: author) }
 
   scenario 'Non-authenticated user tries to vote for answer' do
     visit question_path(question)
@@ -17,13 +18,25 @@ feature 'Vote for answer', %q{
       expect(page).to_not have_content '+'
     end
   end
-  scenario 'Authenticated user try to vote for answer', js: true do
-    sign_in(user)
-    visit question_path(question)
 
-    within '.answers' do
-      click_on '+'
-      expect(page).to have_content 'Answer rating: 1'
+  context 'Authenticated user' do
+    scenario 'try to vote for his own answer', js: true do
+      sign_in(author)
+      visit question_path(question)
+
+      within '.answers' do
+        expect(page).to_not have_content '+'
+      end
+    end
+
+    scenario 'try to vote for another user answer', js: true do
+      sign_in(user)
+      visit question_path(question)
+
+      within '.answers' do
+        click_on '+'
+        expect(page).to have_content 'Answer rating: 1'
+      end
     end
   end
 end

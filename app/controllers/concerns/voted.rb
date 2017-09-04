@@ -6,13 +6,17 @@ module Voted
   end
 
   def voteup
-    @votable.voteup(current_user)
-    render_votable
+    unless current_user.owner_of?(@votable)
+      @votable.voteup(current_user)
+      render_votable
+    end
   end
 
   def votedown
-    @votable.votedown(current_user)
-    render_votable
+    unless current_user.owner_of?(@votable)
+      @votable.votedown(current_user)
+      render_votable
+    end
   end
 
   private

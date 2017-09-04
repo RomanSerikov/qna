@@ -19,7 +19,11 @@ module Votable
     private
 
     def vote(value, user)
-      votes.create!(value: value, user: user)
+      if votes.where(user: user).where(value: value).exists?
+        votes.where(user: user).first.destroy
+      else
+        votes.create!(value: value, user: user)
+      end
     end
   end
 end

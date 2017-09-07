@@ -29,13 +29,23 @@ feature 'Vote for answer', %q{
       end
     end
 
-    scenario 'try to vote for another user answer', js: true do
+    scenario 'try to vote for another user answer positively', js: true do
       sign_in(user)
       visit question_path(question)
 
       within '.answers' do
         click_on '+'
         expect(page).to have_content 'Answer rating: 1'
+      end
+    end
+
+    scenario 'try to vote for another user answer negatively', js: true do
+      sign_in(user)
+      visit question_path(question)
+
+      within '.answers' do
+        click_on '-'
+        expect(page).to have_content 'Answer rating: -1'
       end
     end
 

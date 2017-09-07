@@ -45,8 +45,10 @@ feature 'Vote for answer', %q{
 
       within '.answers' do
         click_on '+'
+        wait_for_ajax
         click_on '+'
-        expect(page).to have_content 'Answer rating: 1'
+        wait_for_ajax
+        expect(page).to have_content 'Answer rating: 0'
       end
     end
   end

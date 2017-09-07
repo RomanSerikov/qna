@@ -7,7 +7,7 @@ class Vote < ApplicationRecord
   private
 
   def user_can_vote_only_once
-    if Vote.where(user_id: user).where(votable_id: votable).exists?
+    if Vote.where(user_id: user, votable_id: votable).exists?
       errors.add(:votes_count, "can't be more than one")
     end
   end

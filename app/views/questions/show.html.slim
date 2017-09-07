@@ -3,6 +3,25 @@
     h2 = @question.title
     p = @question.body
 
+  .q-votes
+    .question-votes 
+      p Question rating: #{@question.rating}
+
+    - if can_vote?(@question)
+      = link_to '+',
+                voteup_question_path,
+                method: :post,
+                remote: true,
+                data: { type: :json },
+                class: 'vote_question'
+      |  |  
+      = link_to '-',
+                votedown_question_path,
+                method: :post,
+                remote: true,
+                data: { type: :json },
+                class: 'vote_question'
+
   - if @question.attachments.present?
     p Attachments:
     ul.question-files = render partial: 'common/attachment', collection: @question.attachments

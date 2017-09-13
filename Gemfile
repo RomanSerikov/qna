@@ -19,6 +19,7 @@ gem 'jquery-rails'
 gem 'carrierwave'
 gem 'remotipart'
 gem 'cocoon'
+gem 'gon'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

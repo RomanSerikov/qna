@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question, only: [:create, :update]
   before_action :set_answer, only: [:update, :destroy, :best]
+  after_action  :publish_answer, only: [:create]
 
   include Voted
 
@@ -61,5 +62,25 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, attachments_attributes: [:file, :id, :_destroy])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    attachments = []
+    @answer.attachments.each do |a|
+      attachments << { id: a.id, file_url: a.file.url, file_name: a.file.identifier }
+    end
+
+    data = {
+      answer:             @answer,
+      answer_user_id:     current_user.id,
+      question_id:        @question.id,
+      question_user_id:   @question.user_id,
+      answer_rating:      @answer.rating,
+      answer_attachments: attachments
+    }
+
+    ActionCable.server.broadcast("question_#{@answer.question.id}", data)
   end
 end

@@ -1,16 +1,7 @@
-- if answer.new_record?
-  - btn_text = 'Send answer'
-  - edit = nil
-  - btn_class = nil
-- else
-  - btn_text = 'Save'
-  - edit = { id: "edit-answer-#{answer.id}" }
-  - btn_class = 'edit_answer_button'
-
-= form_for [question, answer], html: edit, remote: true do |form|
+= form_for [@question, @answer], remote: true do |form|
   
   .answer-errors
-    = render 'common/errors', resource: answer
+    = render 'common/errors', resource: @answer
 
   .field
     = form.label :body, 'Answer'
@@ -27,4 +18,4 @@
           partial: 'common/attachment_fields'
 
   .actions
-    = form.submit btn_text, class: btn_class
+    = form.submit 'Send answer'

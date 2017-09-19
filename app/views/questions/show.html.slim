@@ -58,8 +58,14 @@
 
     p = link_to 'Delete my question', @question, method: :delete, data: { confirm: 'Are you sure?' }
 
+.question-comments
+  = render 'comments/comments', resource: @question
+hr
+h3 Answers
 .answers
   = render @question.answers
 
+hr
+h3 Add answer
 - if user_signed_in? 
-  = render 'answers/form', question: @question, answer: @answer
+  = render 'answers/form'

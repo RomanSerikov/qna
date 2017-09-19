@@ -43,7 +43,7 @@ feature 'Edit answer', %q{
       end
     end
 
-    scenario 'try to edit other user answer' do
+    scenario 'try to edit other user answer', js: true do
       visit question_path(another_question)
 
       within '.answers' do

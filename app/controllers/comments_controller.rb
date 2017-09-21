@@ -1,16 +1,13 @@
 class CommentsController < ApplicationController
   before_action :set_commentable, only: [:create]
+
   after_action :publish_comment, only: [:create]
 
-  def create
-    @comment = @commentable.comments.new(comment_params)
-    @comment.user = current_user
+  respond_to :json
 
-    if @comment.save
-      render json: @comment
-    else
-      render json: @comment.errors.full_messages
-    end
+  def create
+    @comment = @commentable.comments.create(comment_params.merge(user: current_user))
+    respond_with @comment, json: @comment 
   end
 
   private
@@ -29,15 +26,9 @@ class CommentsController < ApplicationController
 
   def publish_comment
     return if @comment.errors.any?
-
-    data = {
-      commentable_id: @comment.commentable_id,
-      commentable_type: @comment.commentable_type.underscore,
-      comment: @comment,
-    }
     ActionCable.server.broadcast(
-      "comments_for_#{@comment.commentable_type == 'Question' ? @commentable.id : @commentable.question_id}",
-      data
+      "comments_for_#{@comment.choose_type(@commentable)}",
+      @comment.prepare_data
     )
   end
 end

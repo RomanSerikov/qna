@@ -1,53 +1,29 @@
 class AnswersController < ApplicationController
+  include Voted
+
   before_action :authenticate_user!
   before_action :set_question, only: [:create]
   before_action :set_answer, only: [:update, :destroy, :best]
-  after_action  :publish_answer, only: [:create]
 
-  include Voted
+  after_action :publish_answer, only: [:create]
 
-  def new
-    @answer = Answer.new
-  end
+  respond_to :js
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-
-    if @answer.save
-      flash.now[:notice] = 'Your answer succefully created.'
-    else
-      flash.now[:notice] = 'Your answer was not created.'
-    end
+    @answer = current_user.answers.create(answer_params.merge(question_id: @question.id))
+    respond_with(@answer)
   end
 
   def update
-    if current_user.owner_of?(@answer)
-      @answer.update(answer_params)
-      flash.now[:notice] = 'Your answer succefully updated'
-    else
-      flash.now[:notice] = 'Your answer was not updated'
-    end
+    @answer.update(answer_params) if current_user.owner_of?(@answer)
   end
 
   def best
-    @question = @answer.question
-
-    if current_user.owner_of?(@question)
-      @answer.mark_best
-      flash.now[:notice] = 'Your answer succefully marked as best.'
-    else
-      flash.now[:notice] = 'You are not the question author.'
-    end
+    respond_with(@answer.mark_best) if current_user.owner_of?(@answer.question)
   end
 
   def destroy
-    if current_user.owner_of?(@answer)
-      @answer.destroy
-      flash.now[:notice] = 'Your answer succefully deleted.'
-    else
-      flash.now[:notice] = 'You are not the answer author.'
-    end
+    respond_with(@answer.destroy) if current_user.owner_of?(@answer)
   end
 
   private

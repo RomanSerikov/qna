@@ -18,7 +18,7 @@ feature 'Delete answer', %q{
 
     click_on 'Delete my answer'
 
-    expect(page).to have_content 'Your answer succefully deleted.'
+    expect(page).to have_content 'Answer was successfully destroyed.'
     expect(page).to_not have_content 'Answer on test question'
   end
 

@@ -9,30 +9,59 @@ feature 'Create answer', %q{
   given(:user)     { create(:user) }
   given(:question) { create(:question, user: user) }
 
-  scenario 'Authenticated user creates answer with valid parameters', js: true do
-    sign_in(user)
+  describe 'Authenticated user' do
+    background do
+      sign_in(user)
+      visit question_path(question)
+    end
 
-    visit question_path(question)
+    scenario 'creates answer with valid parameters', js: true do
+      fill_in 'Answer', with: 'Answer on test question'
+      click_on 'Send answer'
 
-    fill_in 'Answer', with: 'Answer on test question'
-    click_on 'Send answer'
+      expect(current_path).to eq question_path(question)
+      expect(page).to have_content 'Your answer succefully created.'
+      within '.answers' do
+        expect(page).to have_content 'Answer on test question'
+      end
+    end
 
-    expect(current_path).to eq question_path(question)
-    expect(page).to have_content 'Your answer succefully created.'
-    within '.answers' do
-      expect(page).to have_content 'Answer on test question'
+    scenario 'tries to create answer with invalid parameters', js: true do
+      fill_in 'Answer', with: nil
+      click_on 'Send answer'
+
+      expect(page).to have_content 'Body can\'t be blank'
     end
   end
 
-  scenario 'Authenticated user tries to create answer with invalid parameters', js: true do
-    sign_in(user)
+  describe 'Multiple Sessions' do
+    scenario "answer appears on another user' page", js: true do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
 
-    visit question_path(question)
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
 
-    fill_in 'Answer', with: nil
-    click_on 'Send answer'
+      Capybara.using_session('user') do
+        fill_in 'Answer', with: 'Answer on test question'
+        click_on 'Send answer'
 
-    expect(page).to have_content 'Body can\'t be blank'
+        expect(current_path).to eq question_path(question)
+        expect(page).to have_content 'Your answer succefully created.'
+        within '.answers' do
+          expect(page).to have_content 'Answer on test question'
+        end
+      end
+
+      Capybara.using_session('guest') do
+        within '.answers' do
+          expect(page).to have_content 'Answer on test question'
+        end
+      end
+    end
   end
 
   scenario 'Non-authenticated user tries to create answer', js: true do

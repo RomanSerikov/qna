@@ -1,5 +1,6 @@
 class Answer < ApplicationRecord
   include Votable
+  include Commentable
   
   belongs_to :question
   belongs_to :user
@@ -18,5 +19,18 @@ class Answer < ApplicationRecord
       question.answers.update_all(best: false)
       update(best: true)
     end
+  end
+
+  def prepare_attachments
+    attachments.map { |a| { id: a.id, file_url: a.file.url, file_name: a.file.identifier } }
+  end
+
+  def prepare_data
+    { answer:             self,
+      answer_user_id:     user.id,
+      question_id:        question.id,
+      question_user_id:   question.user_id,
+      answer_rating:      rating,
+      answer_attachments: prepare_attachments }
   end
 end

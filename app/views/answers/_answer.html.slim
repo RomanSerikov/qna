@@ -7,14 +7,14 @@
 
       - if can_vote?(answer)
         = link_to '+',
-                  voteup_question_answer_path(@question, answer),
+                  voteup_answer_path(answer),
                   method: :post,
                   remote: true,
                   data: { answer_id: answer.id, type: :json },
                   class: 'vote_answer'
         |  |  
         = link_to '-',
-                  votedown_question_answer_path(@question, answer),
+                  votedown_answer_path(answer),
                   method: :post,
                   remote: true,
                   data: { answer_id: answer.id, type: :json },
@@ -24,9 +24,9 @@
       p Attachments:
       ul = render partial: 'common/attachment', collection: answer.attachments
     br
-    - if can_mark_best?(@question, answer)
+    - if can_mark_best?(answer.question, answer)
       = link_to 'Mark as best',
-                best_question_answer_path(@question, answer),
+                best_answer_path(answer),
                 method: :patch,
                 remote: true,
                 class: 'mark-best'
@@ -36,9 +36,32 @@
       = link_to 'Edit', '', class: 'edit_answer_link', data: { answer_id: answer.id }
       |  |  
       = link_to 'Delete my answer',
-                question_answer_path(answer.question, answer),
+                answer_path(answer),
                 method: :delete,
                 remote: true,
                 data: { confirm: 'Are you sure?' }
       
-      p = render 'answers/form', question: @question, answer: answer
+      = form_for answer, html: { id: "edit-answer-#{answer.id}" }, remote: true do |form|
+  
+        .answer-errors
+          = render 'common/errors', resource: answer
+
+        .field
+          = form.label :body, 'Answer'
+          br
+          = form.text_area :body
+
+        .field
+          p Attachments:
+          p
+            = form.fields_for :attachments do |a|
+              = render 'common/attachment_fields', f: a
+            .links
+              = link_to_add_association 'add file', form, :attachments,
+                partial: 'common/attachment_fields'
+
+        .actions
+          = form.submit 'Save', class: 'edit_answer_button'
+          
+    div id="answer-#{answer.id}-comments"
+      = render 'comments/comments', resource: answer

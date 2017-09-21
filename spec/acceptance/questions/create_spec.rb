@@ -8,31 +8,60 @@ feature 'Create question', %q{
 
   given(:user) { create(:user) }
 
-  scenario 'Authenticated user creates question with valid parameters' do
-    sign_in(user)
+  describe 'Authenticated user' do
+    background do
+      sign_in(user)
+      visit questions_path
+    end
 
-    visit questions_path
-    click_on 'Ask question'
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'test test test'
-    click_on 'Create'
+    scenario 'creates question with valid parameters' do
+      click_on 'Ask question'
+      fill_in 'Title', with: 'Test question'
+      fill_in 'Body', with: 'test test test'
+      click_on 'Create'
 
-    expect(page).to have_content 'Your question succefully created.'
-    expect(page).to have_content 'Test question'
-    expect(page).to have_content 'test test test'
+      expect(page).to have_content 'Your question succefully created.'
+      expect(page).to have_content 'Test question'
+      expect(page).to have_content 'test test test'
+    end
+
+    scenario 'tries to create question with invalid parameters' do
+      click_on 'Ask question'
+      fill_in 'Title', with: nil
+      fill_in 'Body', with: nil
+      click_on 'Create'
+
+      expect(page).to have_content 'Body can\'t be blank'
+      expect(page).to have_content 'Title can\'t be blank'
+    end
   end
 
-  scenario 'Authenticated user tries to create question with invalid parameters' do
-    sign_in(user)
+  describe 'Multiple sessions' do
+    scenario "question appears on another user' page", js: true do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit questions_path
+      end
 
-    visit questions_path
-    click_on 'Ask question'
-    fill_in 'Title', with: nil
-    fill_in 'Body', with: nil
-    click_on 'Create'
+      Capybara.using_session('guest') do
+        visit questions_path
+      end
 
-    expect(page).to have_content 'Body can\'t be blank'
-    expect(page).to have_content 'Title can\'t be blank'
+      Capybara.using_session('user') do
+        click_on 'Ask question'
+        fill_in 'Title', with: 'Test question'
+        fill_in 'Body', with: 'test test test'
+        click_on 'Create'
+
+        expect(page).to have_content 'Your question succefully created.'
+        expect(page).to have_content 'Test question'
+        expect(page).to have_content 'test test test'
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'Test question'
+      end
+    end
   end
 
   scenario 'Non-authenticated user tries to create question' do

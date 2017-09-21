@@ -3,5 +3,5 @@
 <% else %>
   $(".flash").html("<%= flash[:notice] %>");
   $('.answers').append('<%= j render @answer %>');
-  $('#answer_body').val('');
+  $('#new_answer').find('#answer_body').val('');
 <% end %>

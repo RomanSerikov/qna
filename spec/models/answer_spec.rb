@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
   it_behaves_like 'votable'
+  it_behaves_like 'commentable'
 
   it { should belong_to :question }
   it { should have_db_column :question_id }

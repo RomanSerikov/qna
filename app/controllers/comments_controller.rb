@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
     return if @comment.errors.any?
     ActionCable.server.broadcast(
       "comments_for_#{@comment.choose_type(@commentable)}",
-      @comment.prepare_data
+      @comment.broadcast_data
     )
   end
 end

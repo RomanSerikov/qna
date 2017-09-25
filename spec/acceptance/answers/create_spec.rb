@@ -20,7 +20,7 @@ feature 'Create answer', %q{
       click_on 'Send answer'
 
       expect(current_path).to eq question_path(question)
-      expect(page).to have_content 'Your answer succefully created.'
+      expect(page).to have_content 'Answer was successfully created.'
       within '.answers' do
         expect(page).to have_content 'Answer on test question'
       end
@@ -50,7 +50,7 @@ feature 'Create answer', %q{
         click_on 'Send answer'
 
         expect(current_path).to eq question_path(question)
-        expect(page).to have_content 'Your answer succefully created.'
+        expect(page).to have_content 'Answer was successfully created.'
         within '.answers' do
           expect(page).to have_content 'Answer on test question'
         end

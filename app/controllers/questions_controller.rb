@@ -1,56 +1,47 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :destroy]
-  before_action :set_question, only: [:show, :update, :destroy]
-  after_action  :publish_question, only: [:create]
-
   include Voted
 
+  before_action :authenticate_user!, only: [:new, :create, :destroy]
+  before_action :set_question, only: [:show, :update, :destroy]
+  before_action :build_answer, only: [:show]
+
+  after_action :publish_question, only: [:create]
+
+  respond_to :html
+
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answer = @question.answers.build
-    @answer.attachments.build
+    respond_with(@question)
   end
 
   def new
-    @question = Question.new
-    @question.attachments.build
+    respond_with(@question = Question.new)
   end
 
   def create
-    @question = current_user.questions.new(question_params)
-
-    if @question.save
-      redirect_to @question, notice: 'Your question succefully created.'
-    else
-      render :new
-    end
+    @question = current_user.questions.create(question_params)
+    respond_with(@question)
   end
 
   def update
-    if current_user.owner_of?(@question)
-      @question.update(question_params)
-      flash.now[:notice] = 'Your question succefully updated.'
-    else
-      flash.now[:notice] = 'Your question was not updated.'
-    end
+    @question.update(question_params) if current_user.owner_of?(@question)
   end
 
   def destroy
-    if current_user.owner_of?(@question)
-      @question.destroy
-      redirect_to questions_path, notice: 'Your question succefully deleted.'
-    else
-      redirect_to @question, notice: 'You are not the question author.'
-    end
+    respond_with(@question.destroy) if current_user.owner_of?(@question)
   end
 
   private
 
   def set_question
     @question = Question.find(params[:id])
+  end
+
+  def build_answer
+    @answer = @question.answers.build
   end
   
   def question_params

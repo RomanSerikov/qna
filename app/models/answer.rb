@@ -25,7 +25,7 @@ class Answer < ApplicationRecord
     attachments.map { |a| { id: a.id, file_url: a.file.url, file_name: a.file.identifier } }
   end
 
-  def prepare_data
+  def broadcast_data
     { answer:             self,
       answer_user_id:     user.id,
       question_id:        question.id,

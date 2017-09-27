@@ -6,6 +6,7 @@ RSpec.configure do |config|
   Capybara.javascript_driver = :webkit
    
   config.include AcceptanceHelper, type: :feature
+  config.include OmniauthMacros
   
   config.use_transactional_fixtures = false
 
@@ -29,3 +30,6 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 end
+
+OmniAuth.config.test_mode = true
+OmniAuth.config.logger    = Rails.logger

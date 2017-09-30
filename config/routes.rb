@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
   root to: "questions#index"
 
+  devise_scope :user do
+    post '/register' => 'omniauth_callbacks#register'
+  end
+
   concern :votable do
     member do
       post :voteup

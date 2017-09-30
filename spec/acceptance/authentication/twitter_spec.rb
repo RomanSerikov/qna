@@ -26,7 +26,7 @@ feature 'User sign in with twitter account', %q{
     expect(current_path).to eq root_path
   end
 
-  scenario 'User fails facebook authentication' do
+  scenario 'User fails twitter authentication' do
     mock_invalid_twitter_auth_hash
     click_on 'Sign in with Twitter'
 

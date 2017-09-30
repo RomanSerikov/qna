@@ -7,8 +7,8 @@ h1 Enter your email to finish registration
     = email_field_tag :email
 
   .field
-    = hidden_field_tag :provider, @request_info.provider
-    = hidden_field_tag :uid, @request_info.uid.to_s
+    = hidden_field_tag :provider, @auth_info.provider
+    = hidden_field_tag :uid, @auth_info.uid.to_s
 
   .actions
     = submit_tag 'Send'

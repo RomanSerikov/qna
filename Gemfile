@@ -22,6 +22,9 @@ gem 'cocoon'
 gem 'gon'
 gem 'skim'
 gem 'responders', '~> 2.0'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -32,6 +35,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'launchy'
   gem 'database_cleaner'
+  gem 'capybara-email'
 end
 
 group :development do
@@ -39,6 +43,7 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'letter_opener'
 end
 
 group :test do

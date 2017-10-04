@@ -9,6 +9,8 @@ class QuestionsController < ApplicationController
 
   respond_to :html
 
+  authorize_resource
+
   def index
     respond_with(@questions = Question.all)
   end
@@ -27,11 +29,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if current_user.owner_of?(@question)
+    @question.update(question_params)
   end
 
   def destroy
-    respond_with(@question.destroy) if current_user.owner_of?(@question)
+    respond_with(@question.destroy)
   end
 
   private

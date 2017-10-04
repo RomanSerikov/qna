@@ -5,7 +5,7 @@
       div[class = "answer-votes-#{answer.id}"]
         p Answer rating: #{answer.rating}
 
-      - if can_vote?(answer)
+      - if can?(:vote, answer)
         = link_to '+',
                   voteup_answer_path(answer),
                   method: :post,
@@ -24,7 +24,7 @@
       p Attachments:
       ul = render partial: 'common/attachment', collection: answer.attachments
     br
-    - if can_mark_best?(answer.question, answer)
+    - if can?(:best, answer)
       = link_to 'Mark as best',
                 best_answer_path(answer),
                 method: :patch,
@@ -32,7 +32,7 @@
                 class: 'mark-best'
       |  |  
 
-    - if user_signed_in? && current_user.owner_of?(answer)
+    - if can?(:modify, answer)
       = link_to 'Edit', '', class: 'edit_answer_link', data: { answer_id: answer.id }
       |  |  
       = link_to 'Delete my answer',

@@ -6,17 +6,15 @@ module Voted
   end
 
   def voteup
-    unless current_user.owner_of?(@votable)
-      @votable.voteup(current_user)
-      render_votable
-    end
+    authorize! :voteup, @votable
+    @votable.voteup(current_user)
+    render_votable
   end
 
   def votedown
-    unless current_user.owner_of?(@votable)
-      @votable.votedown(current_user)
-      render_votable
-    end
+    authorize! :votedown, @votable
+    @votable.votedown(current_user)
+    render_votable
   end
 
   private

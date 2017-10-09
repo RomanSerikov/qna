@@ -123,9 +123,9 @@ RSpec.describe AnswersController, type: :controller do
           .not_to change(Answer, :count)
       end
 
-      it 'renders destroy template' do
+      it 'redirects to root url' do
         delete :destroy, params: { question_id: question, id: answer }, format: :js
-        expect(response).to render_template :destroy
+        expect(response).to redirect_to root_url
       end
     end
   end

@@ -107,10 +107,10 @@ RSpec.describe QuestionsController, type: :controller do
         expect(another_question.body).to_not eq 'NewBody'
       end
 
-      it 'renders update template' do
+      it 'redirects to index view' do
         patch :update, params: { id: another_question, question: attributes_for(:question) }, 
               format: :js
-        expect(response).to render_template :update
+        expect(response).to redirect_to root_url
       end
     end
   end

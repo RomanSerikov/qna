@@ -40,5 +40,6 @@ class Ability
       answer.question.user == user
     end
     can :me, User
+    can :index, User
   end
 end

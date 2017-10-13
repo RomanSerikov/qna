@@ -39,5 +39,7 @@ class Ability
     can :best, Answer do |answer|
       answer.question.user == user
     end
+    can :me, User
+    can :index, User
   end
 end

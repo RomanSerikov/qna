@@ -3,6 +3,6 @@ class QuestionSerializer < ActiveModel::Serializer
   has_many :comments
 
   def attachments
-    object.attachments.map { |a| a.file.url }
+    object.attachments.map { |a| { "url" => a.file.url } }
   end
 end

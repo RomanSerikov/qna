@@ -27,7 +27,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'cancancan', '~> 2.0'
 gem 'doorkeeper'
-gem 'active_model_serializers'
+gem "active_model_serializers", "~> 0.9.3"
 gem 'oj'
 gem 'oj_mimic_json'
 

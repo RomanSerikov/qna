@@ -67,7 +67,7 @@ describe 'Profile API' do
       end
 
       it 'returns 2 users' do
-        expect(response.body).to be_json_eql(users.to_json)
+        expect(response.body).to be_json_eql(users.to_json).at_path('profiles')
       end
 
       it 'does not return my profile' do
@@ -77,7 +77,7 @@ describe 'Profile API' do
       %w(id email created_at updated_at admin).each do |attr|
         it "contains #{attr}" do
           users.each_with_index do |user, id|
-            expect(response.body).to be_json_eql(user.send(attr.to_sym).to_json).at_path("#{id}/#{attr}")
+            expect(response.body).to be_json_eql(user.send(attr.to_sym).to_json).at_path("profiles/#{id}/#{attr}")
           end
         end
       end
@@ -85,7 +85,7 @@ describe 'Profile API' do
       %w(password encrypted_password).each do |attr|
         it "does not contain #{attr}" do
           users.each_index do |id|
-            expect(response.body).to_not have_json_path("#{id}/#{attr}")
+            expect(response.body).to_not have_json_path("profiles/#{id}/#{attr}")
           end
         end
       end

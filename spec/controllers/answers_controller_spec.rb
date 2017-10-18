@@ -123,9 +123,9 @@ RSpec.describe AnswersController, type: :controller do
           .not_to change(Answer, :count)
       end
 
-      it 'redirects to root url' do
+      it 'is forbidden' do
         delete :destroy, params: { question_id: question, id: answer }, format: :js
-        expect(response).to redirect_to root_url
+        expect(response).to be_forbidden
       end
     end
   end

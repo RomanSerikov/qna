@@ -107,10 +107,10 @@ RSpec.describe QuestionsController, type: :controller do
         expect(another_question.body).to_not eq 'NewBody'
       end
 
-      it 'redirects to index view' do
+      it 'is forbidden' do
         patch :update, params: { id: another_question, question: attributes_for(:question) }, 
               format: :js
-        expect(response).to redirect_to root_url
+        expect(response).to be_forbidden
       end
     end
   end

@@ -27,6 +27,9 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'cancancan', '~> 2.0'
 gem 'doorkeeper'
+gem "active_model_serializers", "~> 0.9.3"
+gem 'oj'
+gem 'oj_mimic_json'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

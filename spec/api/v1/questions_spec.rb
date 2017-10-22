@@ -90,7 +90,7 @@ describe 'Questions API' do
     context 'authorized' do
       let(:access_token) { create(:access_token) }
 
-      it 'returns 210 status' do
+      it 'returns 201 status' do
         post "/api/v1/questions", params: { 
           format: :json, access_token: access_token.token, question: attributes_for(:question)
         }

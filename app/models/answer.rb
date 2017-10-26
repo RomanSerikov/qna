@@ -39,6 +39,6 @@ class Answer < ApplicationRecord
   private
 
   def notice_question_author
-    NewAnswerNotificationJob.perform_later(self)
+    AnswersMailer.notify_question_author(self).deliver_later
   end
 end

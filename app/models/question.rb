@@ -10,4 +10,6 @@ class Question < ApplicationRecord
   validates :title, :body, presence: :true
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
+
+  scope :digest, -> { where("created_at > ?", 1.day.ago) }
 end

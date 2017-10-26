@@ -12,6 +12,8 @@ class Answer < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
+  after_create :notice_question_author
+
   default_scope { order(best: :desc) }
 
   def mark_best
@@ -32,5 +34,11 @@ class Answer < ApplicationRecord
       question_user_id:   question.user_id,
       answer_rating:      rating,
       answer_attachments: prepare_attachments }
+  end
+
+  private
+
+  def notice_question_author
+    NewAnswerNotificationJob.perform_later(self)
   end
 end

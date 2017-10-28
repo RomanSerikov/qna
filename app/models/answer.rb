@@ -12,7 +12,7 @@ class Answer < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
-  after_create :notice_question_author
+  after_commit :notice_subscribers, on: :create
 
   default_scope { order(best: :desc) }
 
@@ -38,7 +38,9 @@ class Answer < ApplicationRecord
 
   private
 
-  def notice_question_author
-    AnswersMailer.notify_question_author(self).deliver_later
+  def notice_subscribers
+    question.subscriptions.each do |subscription|
+      AnswersMailer.notify(self, subscription.user).deliver_later
+    end
   end
 end

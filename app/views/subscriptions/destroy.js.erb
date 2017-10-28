@@ -1,0 +1,6 @@
+<% if @subscription.errors.any? %>
+  $('.sub-errors').html('<%= j render 'common/errors', resource: @subscription %>');
+<% else %>
+  $(".flash").html("<%= flash[:notice] %>");
+  $('.sub-block').html('<%= j render 'subscriptions/sub', question: @subscription.question %>');
+<% end %>

@@ -6,6 +6,7 @@ class Question < ApplicationRecord
 
   has_many :answers, dependent: :destroy
   has_many :attachments, dependent: :destroy, as: :attachable
+  has_many :subscriptions, dependent: :destroy
   
   validates :title, :body, presence: :true
 

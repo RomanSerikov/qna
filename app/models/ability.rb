@@ -32,7 +32,7 @@ class Ability
 
   def user_abilities
     guest_abilities
-    can :create, [Question, Answer, Comment]
+    can :create, [Question, Answer, Comment, Subscription]
     can :modify, [Question, Answer], user: user
     can :vote, [Question, Answer]
     cannot :vote, [Question, Answer], user: user
@@ -41,5 +41,6 @@ class Ability
     end
     can :me, User
     can :index, User
+    can :destroy, Subscription
   end
 end

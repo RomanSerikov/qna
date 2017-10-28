@@ -39,8 +39,6 @@ class Answer < ApplicationRecord
   private
 
   def notice_subscribers
-    question.subscriptions.each do |subscription|
-      AnswersMailer.notify(self, subscription.user).deliver_later
-    end
+    NotifySubscribersJob.perform_later(self)
   end
 end

@@ -6,7 +6,6 @@ class QuestionsController < ApplicationController
   before_action :build_answer, only: [:show]
 
   after_action :publish_question, only: [:create]
-  after_action :subscribe_user, only: [:create]
 
   respond_to :html
 
@@ -60,9 +59,5 @@ class QuestionsController < ApplicationController
         locals: { question: @question }
       )
     )
-  end
-
-  def subscribe_user
-    Subscription.create(user: @question.user, question: @question)
   end
 end

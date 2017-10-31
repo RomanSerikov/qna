@@ -20,6 +20,7 @@ class Ability
   def set_aliases
     alias_action :update, :destroy, :to => :modify
     alias_action :voteup, :votedown, :to => :vote
+    alias_action :create, :destroy, :to => :use
   end
 
   def guest_abilities
@@ -41,5 +42,6 @@ class Ability
     end
     can :me, User
     can :index, User
+    can :use, Subscription
   end
 end

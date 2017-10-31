@@ -61,6 +61,16 @@
 .question-comments
   = render 'comments/comments', resource: @question
 hr
+- if can?(:use, Subscription)
+  .subscription
+    .sub-errors
+    .sub-block
+      - if subscription = (current_user.subscribed_for?(@question))
+        = render 'subscriptions/unsub', subscription: subscription
+      - else
+        = render 'subscriptions/sub', question: @question
+
+hr
 h3 Answers
 .answers
   = render @question.answers

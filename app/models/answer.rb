@@ -39,6 +39,6 @@ class Answer < ApplicationRecord
   private
 
   def notice_subscribers
-    NotifySubscribersJob.perform_later(self)
+    NotifySubscribersJob.perform_later(question)
   end
 end

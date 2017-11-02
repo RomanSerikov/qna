@@ -1,0 +1,16 @@
+h1 Search
+
+= form_tag search_path, method: :get
+
+  .field
+    = label_tag "Search type"
+    br
+    = select_tag "search[type]", options_from_collection_for_select(@search_types, "first", "last")
+
+  .field
+    = label_tag "Search text"
+    br
+    = text_field_tag "search[text]"
+
+  .actions
+    = submit_tag "Find"

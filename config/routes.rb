@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   root to: "questions#index"
 
+  get "new_search", to: 'searches#new'
+  get "search",     to: 'searches#create'
+
   devise_scope :user do
     post '/register' => 'omniauth_callbacks#register'
   end

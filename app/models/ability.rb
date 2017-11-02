@@ -33,7 +33,7 @@ class Ability
 
   def user_abilities
     guest_abilities
-    can :create, [Question, Answer, Comment]
+    can :create, [Question, Answer, Comment, :search]
     can :modify, [Question, Answer], user: user
     can :vote, [Question, Answer]
     cannot :vote, [Question, Answer], user: user

@@ -1,13 +1,13 @@
 class SearchesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_search_types, only: [:new]
+  before_action :set_search_types
 
   authorize_resource class: false
 
   def new
   end
 
-  def create
+  def search
     redirect_to new_search_path if check_search_type
     @search = model_klass.search search_params[:text]
     render :show

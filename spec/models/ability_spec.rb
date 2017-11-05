@@ -67,7 +67,7 @@ describe Ability do
     end
 
     context 'search' do
-      it { should be_able_to :create, :search }
+      it { should be_able_to :search, :search }
     end
   end
 end

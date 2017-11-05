@@ -1,0 +1,9 @@
+h1 Search result
+
+.search-results
+  p = link_to "New Search", new_search_path
+  p Found #{@search.size} results:
+  hr
+  - @search.each do |s|
+    = render "searches/#{s.class.to_s.underscore}", resource: s
+    hr

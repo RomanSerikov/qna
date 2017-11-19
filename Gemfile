@@ -37,7 +37,7 @@ gem 'thinking-sphinx', '3.3.0'
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 gem 'therubyracer'
-gem 'redis'
+gem 'redis', '~> 3.0' 
 
 
 group :development, :test do

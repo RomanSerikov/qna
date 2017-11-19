@@ -36,6 +36,7 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
+gem 'therubyracer'
 
 
 group :development, :test do

@@ -37,7 +37,8 @@ gem 'thinking-sphinx', '3.3.0'
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 gem 'therubyracer'
-gem 'redis', '~> 3.0' 
+gem 'redis', '~> 3.0'
+gem 'twitter-bootstrap-rails'
 
 
 group :development, :test do

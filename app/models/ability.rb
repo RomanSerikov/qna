@@ -26,6 +26,7 @@ class Ability
 
   def guest_abilities
     can :read, :all
+    can :make, :search
   end
 
   def admin_abilities
@@ -44,6 +45,5 @@ class Ability
     can :me, User
     can :index, User
     can :use, Subscription
-    can :make, :search
   end
 end

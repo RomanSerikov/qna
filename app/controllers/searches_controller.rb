@@ -1,5 +1,4 @@
 class SearchesController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_search_types
 
   authorize_resource class: false

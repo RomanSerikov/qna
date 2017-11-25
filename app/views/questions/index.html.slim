@@ -1,7 +1,7 @@
 h1 Questions list
 
-.questions-list = render @questions
+.questions-list.list-group = render @questions
 
 br
 
-= link_to 'Ask question', new_question_path 
+= link_to 'Ask question', new_question_path, class: 'btn btn-primary' 

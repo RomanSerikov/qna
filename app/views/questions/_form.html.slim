@@ -2,15 +2,15 @@
   
   = render 'common/errors', resource: question
 
-  .field
+  .field.form-group
     = form.label :title
-    = form.text_field :title
+    = form.text_field :title, class: 'form-control'
 
-  .field
+  .field.form-group
     = form.label :body
-    = form.text_area :body
+    = form.text_area :body, class: 'form-control'
 
-  .field
+  .field.form-group
     p Attachments:
     p
       = form.fields_for :attachments, question.attachments.build do |a|
@@ -20,4 +20,4 @@
           partial: 'common/attachment_fields'
 
   .actions
-    = form.submit 'Create'
+    = form.submit 'Create', class: 'btn btn-primary'

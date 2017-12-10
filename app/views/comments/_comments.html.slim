@@ -1,15 +1,16 @@
-.item-comments
-  .comments-list id="comments-#{resource.class.to_s.underscore}-#{resource.id}"
-    - if resource.comments.any?
-      = render resource.comments
-  - if can?(:create, Comment)
-    = link_to 'Add Comment', '', class: 'add_comment_link', remote: true
+- cache resource do
+  .item-comments
+    .comments-list id="comments-#{resource.class.to_s.underscore}-#{resource.id}"
+      - if resource.comments.any?
+        = render resource.comments
+    - if can?(:create, Comment)
+      = link_to 'Add Comment', '', class: 'add_comment_link', remote: true
 
-    .comment-form
-      = form_for [resource, resource.comments.build], remote: true do |f|
-        .field
-          = f.label :body, 'Your comment'
-          br
-          = f.text_area :body
-        .actions
-          = button_tag 'Add comment'
+      .comment-form
+        = form_for [resource, resource.comments.build], remote: true do |f|
+          .field
+            = f.label :body, 'Your comment'
+            br
+            = f.text_area :body
+          .actions
+            = button_tag 'Add comment'

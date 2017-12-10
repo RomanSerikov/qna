@@ -40,6 +40,7 @@ gem 'therubyracer'
 gem 'redis', '~> 3.0'
 gem 'twitter-bootstrap-rails'
 gem 'unicorn'
+gem 'redis-rails'
 
 
 group :development, :test do

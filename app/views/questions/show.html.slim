@@ -30,22 +30,23 @@
     - if can?(:modify, @question)
       .question-errors
       
-      p = link_to 'Edit my question', '', class: 'edit_question_link', remote: true
+      p
+        = link_to 'Edit my question', '', class: 'edit_question_link', remote: true
+        |  |  
+        = link_to 'Delete my question', @question, method: :delete, data: { confirm: 'Are you sure?' }
 
       p
         = form_for @question, class: 'edit_question_form', remote: true do |f|
 
-          .field
+          .form-group
             = f.label :title, 'Question title'
-            br
-            = f.text_field :title
+            = f.text_field :title, class: "form-control"
 
-          .field
+          .form-group
             = f.label :body, 'Question body'
-            br
-            = f.text_area :body
+            = f.text_area :body, class: "form-control"
 
-          .field
+          .form-group
             p Attachments:
             p
               = f.fields_for :attachments do |a|
@@ -55,9 +56,9 @@
                   partial: 'common/attachment_fields'
 
           .actions
-            = f.submit 'Save question', class: 'edit_question_button'
+            = f.submit 'Save question', class: 'edit_question_button btn btn-primary'
 
-      p = link_to 'Delete my question', @question, method: :delete, data: { confirm: 'Are you sure?' }
+      
 
 .question-comments
   = render 'comments/comments', resource: @question
@@ -71,7 +72,7 @@ hr
       - else
         = render 'subscriptions/sub', question: @question
 
-hr
+  hr
 h3 Answers
 .answers
   = render @question.answers

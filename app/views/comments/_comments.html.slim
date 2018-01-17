@@ -6,10 +6,10 @@
     = link_to 'Add Comment', '', class: 'add_comment_link', remote: true
 
     .comment-form
-      = form_for [resource, resource.comments.build], remote: true do |f|
-        .field
-          = f.label :body, 'Your comment'
-          br
-          = f.text_area :body
-        .actions
-          = button_tag 'Add comment'
+      .col-md-4
+        = form_for [resource, resource.comments.build], remote: true do |f|
+          .form-group
+            = f.label :body, 'Your comment'
+            = f.text_area :body, class: "form-control"
+          .actions
+            = button_tag 'Add comment', class: "btn btn-primary"

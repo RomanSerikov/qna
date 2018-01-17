@@ -1,0 +1,20 @@
+.navbar.navbar-default.navbar-static-top
+  .container
+    button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse"
+      span class="icon-bar"
+      span class="icon-bar"
+      span class="icon-bar"
+    
+    = link_to "QnA", root_path, class: "navbar-brand"
+    .navbar-collapse.collapse.navbar-responsive-collapse
+      = form_tag search_path, method: :get, class: 'navbar-form navbar-left'
+        .form-group
+          = text_field_tag "search[text]", "", class: 'form-control', placeholder: 'Search here'
+          = hidden_field_tag "search[type]", "thinking_sphinx"
+        = submit_tag "Find", class: "btn btn-default search-btn"
+
+      ul class="nav navbar-nav pull-right"
+        - if user_signed_in?
+          li = link_to 'Log out', destroy_user_session_path, method: :delete
+        - else
+          li = link_to 'Log in plz', new_user_session_path

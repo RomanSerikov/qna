@@ -1,6 +1,6 @@
 - if answer.persisted?
   .panel.panel-default
-    .answer.panel-body id="answer-#{answer.id}" class=('best-answer' if answer.best)
+    .answer.panel-body id="answer-#{answer.id}" class=('best-answer bg-success' if answer.best)
       = answer.body
       .a-votes
         div[class = "answer-votes-#{answer.id}"]
@@ -47,12 +47,11 @@
           .answer-errors
             = render 'common/errors', resource: answer
 
-          .field
+          .form-group
             = form.label :body, 'Answer'
-            br
-            = form.text_area :body
+            = form.text_area :body, class: "form-control"
 
-          .field
+          .form-group
             p Attachments:
             p
               = form.fields_for :attachments do |a|
@@ -62,7 +61,7 @@
                   partial: 'common/attachment_fields'
 
           .actions
-            = form.submit 'Save', class: 'edit_answer_button'
+            = form.submit 'Save', class: 'edit_answer_button btn btn-primary'
             
       div id="answer-#{answer.id}-comments"
         = render 'comments/comments', resource: answer

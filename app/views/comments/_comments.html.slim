@@ -1,12 +1,12 @@
 .item-comments
   .comments-list id="comments-#{resource.class.to_s.underscore}-#{resource.id}"
     - if resource.comments.any?
+      h4 Comments
       = render resource.comments
   - if can?(:create, Comment)
     = link_to 'Add Comment', '', class: 'add_comment_link', remote: true
 
     .comment-form
-      .col-md-4
         = form_for [resource, resource.comments.build], remote: true do |f|
           .form-group
             = f.label :body, 'Your comment'

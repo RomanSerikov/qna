@@ -1,7 +1,7 @@
 - if answer.persisted?
   .panel.panel-default
     .answer.panel-body id="answer-#{answer.id}" class=('best-answer bg-success' if answer.best)
-      = answer.body
+      = simple_format(answer.body)
       .a-votes
         div[class = "answer-votes-#{answer.id}"]
           p Answer rating: #{answer.rating}

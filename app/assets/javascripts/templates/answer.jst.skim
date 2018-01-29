@@ -5,27 +5,28 @@
 - attachments      = @data['answer_attachments']
 - answer_rating    = @data['answer_rating']
 
-.answer id="answer-#{answer.id}"
-  = answer.body
-  .a-votes
-    div[class = "answer-votes-#{answer.id}"]
-      p Answer rating: #{answer_rating}
+.panel.panel-default
+  .answer.panel-body id="answer-#{answer.id}"
+    = answer.body
+    .a-votes
+      div[class = "answer-votes-#{answer.id}"]
+        p Answer rating: #{answer_rating}
 
-    - if gon.current_user_id && (gon.current_user_id != answer_user_id)
-      a href="/questions/#{question_id}/answers/#{answer.id}/voteup" data-type='json' data-remote='true' rel='nofollow' data-method='post' data-answer-id="#{answer.id}" class='vote_answer'
-        |+
-      |  |  
-      a href="/questions/#{question_id}/answers/#{answer.id}/votedown" data-type='json' data-remote='true' rel='nofollow' data-method='post' data-answer-id="#{answer.id}" class='vote_answer'
-        |-
+      - if gon.current_user_id && (gon.current_user_id != answer_user_id)
+        a href="/questions/#{question_id}/answers/#{answer.id}/voteup" data-type='json' data-remote='true' rel='nofollow' data-method='post' data-answer-id="#{answer.id}" class='vote_answer'
+          |+
+        |  |  
+        a href="/questions/#{question_id}/answers/#{answer.id}/votedown" data-type='json' data-remote='true' rel='nofollow' data-method='post' data-answer-id="#{answer.id}" class='vote_answer'
+          |-
 
-  - if attachments.length
-    p Attachments:
-    ul
-      - $.each attachments, (index, file)=>
-        li
-          a href="#{file.file_url}" #{file.file_name}
-  br
+    - if attachments.length
+      p Attachments:
+      ul
+        - $.each attachments, (index, file)=>
+          li
+            a href="#{file.file_url}" #{file.file_name}
+    br
 
-  - if gon.current_user_id == question_user_id
-    a href="/questions/#{question_id}/answers/#{answer.id}/best" data-method='patch' data-remote='true' class='mark-best' Mark as best
-    |  | 
+    - if gon.current_user_id == question_user_id
+      a href="/questions/#{question_id}/answers/#{answer.id}/best" data-method='patch' data-remote='true' class='mark-best' Mark as best
+      |  | 

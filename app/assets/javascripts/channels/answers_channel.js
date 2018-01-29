@@ -1,12 +1,6 @@
 App.cable.subscriptions.create('AnswersChannel', {
   connected: function() {
-    var question_id = $('.question').data('id');
-
-    if (question_id) {
-      this.perform('follow_answers', { id: question_id });
-    } else {
-      this.perform('unfollow');
-    }
+    connectChannel(this, "follow_answers", ".question")
   },
   
   received: function(data) {

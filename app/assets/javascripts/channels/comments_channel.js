@@ -1,12 +1,6 @@
 App.cable.subscriptions.create('CommentsChannel', {
-  connected: function() { 
-    var question_id = $(".question").data("id");
-
-    if (question_id) {
-      this.perform('follow_comments', { id: question_id });
-    } else {
-      this.perform('unfollow');
-    }
+  connected: function() {
+    connectChannel(this, "follow_comments", ".question")
   },
   
   received: function(data) {

@@ -4,13 +4,7 @@ $(document).on('click', '.add_comment_link', function(e) {
   var comment_link = $(this),
       form         = comment_link.next('.comment-form').find('.new_comment');
 
-  if (!$(this).hasClass('cancel')) {
-    $(this).html('Cancel comment');
-    $(this).addClass('cancel');
-  } else {
-    $(this).html('Add Comment');
-    $(this).removeClass('cancel');
-  }
+  manageSelector(this, 'cancel', 'Cancel comment', 'Add Comment')
 
   form.toggle();
 });

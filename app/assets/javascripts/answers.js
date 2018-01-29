@@ -4,13 +4,7 @@ $(document).on('click', '.edit_answer_link', function(e) {
   var answerId = $(this).data('answerId');
   var form = $('#edit-answer-' + answerId);
 
-  if (!$(this).hasClass('answer-cancel')) {
-    $(this).html('Cancel edit');
-    $(this).addClass('answer-cancel');
-  } else {
-    $(this).html('Edit');
-    $(this).removeClass('answer-cancel');
-  }
+  manageSelector(this, 'answer-cancel', 'Cancel edit', 'Edit')
 
   form.toggle();
 });

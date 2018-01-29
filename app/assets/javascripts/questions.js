@@ -3,13 +3,7 @@ $(document).on('click', '.edit_question_link', function(e) {
 
   var form = $('.edit_question');
 
-  if (!$(this).hasClass('cancel')) {
-    $(this).html('Close edit');
-    $(this).addClass('cancel');
-  } else {
-    $(this).html('Edit my question');
-    $(this).removeClass('cancel');
-  }
+  manageSelector(this, 'cancel', 'Close edit', 'Edit my question')
 
   form.toggle();
 });

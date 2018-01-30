@@ -13,4 +13,4 @@ before_install:
   - cp config/database.yml.travis config/database.yml
 
 script:
-  - xvfb-run -a bundle exec spec
+  - xvfb-run -a bundle exec rake

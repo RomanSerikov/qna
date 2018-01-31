@@ -14,7 +14,7 @@ class Answer < ApplicationRecord
 
   after_commit :notice_subscribers, on: :create
 
-  default_scope { order(best: :desc) }
+  default_scope { order(best: :desc, created_at: :asc) }
 
   def mark_best
     transaction do

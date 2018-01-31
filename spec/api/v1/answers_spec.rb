@@ -9,6 +9,7 @@ describe 'Answers API' do
     context 'authorized' do
       let(:access_token) { create(:access_token) }
       let!(:answers)     { create_list(:answer, 2, question: question) }
+      let(:answer) { answers.first }
 
       before do 
         get "/api/v1/questions/#{question.id}/answers", params: {
@@ -26,9 +27,7 @@ describe 'Answers API' do
 
       %w(id body created_at updated_at).each do |attr|
         it "answer object contains #{attr}" do
-          answers.reverse.each_with_index do |answer, id|
-            expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("answers/#{id}/#{attr}")
-          end
+          expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("answers/0/#{attr}")
         end
       end
     end

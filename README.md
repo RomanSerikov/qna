@@ -1,4 +1,5 @@
 # README
+[![Build Status](https://travis-ci.org/RomanSerikov/qna.svg?branch=master)](https://travis-ci.org/RomanSerikov/qna)
 [![Maintainability](https://api.codeclimate.com/v1/badges/e55d8da8f92c3c9e6c39/maintainability)](https://codeclimate.com/github/RomanSerikov/qna/maintainability)
 
 Учебное приложение онлайн школы [Thinknetica](http://thinknetica.com).

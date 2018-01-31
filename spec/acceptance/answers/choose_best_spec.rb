@@ -36,7 +36,7 @@ feature 'Choose best answer', %q{
     end
 
     scenario 'try to choose the best answer', js: true do
-      within "#answer-#{question.answers.last.id}" do
+      within "#answer-#{answer_2.id}" do
         click_on 'Mark as best'
       end
 

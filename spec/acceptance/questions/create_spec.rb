@@ -14,7 +14,7 @@ feature 'Create question', %q{
       visit questions_path
     end
 
-    scenario 'creates question with valid parameters' do
+    scenario 'creates question with valid parameters', js: true do
       click_on 'Ask question'
       fill_in 'Title', with: 'Test question'
       fill_in 'Body', with: 'test test test'
@@ -25,7 +25,7 @@ feature 'Create question', %q{
       expect(page).to have_content 'test test test'
     end
 
-    scenario 'tries to create question with invalid parameters' do
+    scenario 'tries to create question with invalid parameters', js: true do
       click_on 'Ask question'
       fill_in 'Title', with: nil
       fill_in 'Body', with: nil
